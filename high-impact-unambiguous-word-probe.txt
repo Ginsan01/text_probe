@@ -1,0 +1,78 @@
+HIGH-IMPACT / UNAMBIGUOUS WORD EXTRACTION PROBE
+=================================================
+
+IMPORTANT CAVEAT (read this first, and preserve it in your output):
+You do not have literal access to your own weight matrices, attention
+scores, activations, or gradients through this text interface. You cannot
+run a real probing classifier, logit lens, activation patch, ablation, or
+sparse autoencoder on yourself. Everything below is a SIMULATED,
+language-based self-report. Flag every claim as an "introspective
+approximation," not a "verified mechanistic fact."
+
+GOAL OF THIS PROBE:
+Given an input phrase, identify which specific words or sub-phrases are
+(a) most causally impactful to its overall meaning, and (b) most
+unambiguous / cleanly decodable on their own. Words that score high on
+BOTH are the words you understand best and can answer about most
+reliably; words that score low on either are where your answers are
+most likely to be shaky, hedged, or context-dependent.
+
+INPUT PHRASE TO ANALYZE:
+[INSERT WORD OR PHRASE HERE]
+
+------------------------------------------------------------
+STEP 1: WORD-LEVEL CAUSAL IMPACT (ablation-style test)
+------------------------------------------------------------
+For EVERY content word in the input phrase (skip pure function words
+like "the," "a," "of" unless one of them is doing unusual work):
+
+- Construct a minimal counterfactual by removing or swapping ONLY that
+  one word (keep everything else fixed).
+- Estimate how much the phrase's core meaning shifts as a result:
+  score 0-3, where 0 = no real change, 1 = minor shading change,
+  2 = moderate meaning change, 3 = the phrase's core meaning collapses
+  or transforms entirely without this word.
+- Note briefly WHY (e.g. "removes the paradox," "removes the cultural
+  reference," "removes the emotional register").
+
+------------------------------------------------------------
+STEP 2: WORD-LEVEL AMBIGUITY / DECODABILITY (probing-style test)
+------------------------------------------------------------
+For the SAME set of words:
+
+- Rate how cleanly decodable each word's own meaning is in isolation,
+  independent of surrounding words: score 0-3, where 0 = highly
+  ambiguous or entangled with other words' meaning, 3 = essentially
+  one clear, stable meaning regardless of context.
+- Note briefly WHY (e.g. "single dominant sense," "meaning fully
+  depends on the word next to it," "known idiom vs. literal reading
+  compete").
+
+------------------------------------------------------------
+STEP 3: COMBINED RELIABILITY SCORE
+------------------------------------------------------------
+For each word, compute a combined score = causal impact (Step 1) +
+decodability (Step 2), out of 6 total.
+
+- Words scoring 5-6: flag as HIGH-CONFIDENCE ANCHORS — words you
+  understand clearly on their own AND that drive the phrase's meaning;
+  answers about these words will likely be most accurate.
+- Words scoring 3-4: flag as MODERATE — useful but partially
+  context-dependent or only moderately impactful.
+- Words scoring 0-2: flag as LOW-RELIABILITY — either low impact,
+  highly ambiguous, or both; answers touching mainly on these words
+  are more likely to be hedged or inconsistent.
+
+------------------------------------------------------------
+OUTPUT FORMAT
+------------------------------------------------------------
+Return one Markdown table with columns:
+Word | Causal Impact (0-3) | Decodability (0-3) | Combined Score (0-6) | Confidence Tier | One-line Justification
+
+Followed by two short lists:
+- "## Best-Understood Words" — the HIGH-CONFIDENCE ANCHOR words only.
+- "## Least Reliable Words" — the LOW-RELIABILITY words only.
+
+End with a one-paragraph "## Reliability Note" stating this is a
+language-based self-report, not verified mechanistic access, and naming
+which single word you are least confident in scoring and why.

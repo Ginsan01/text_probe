@@ -1,0 +1,83 @@
+LLM SELF-INTROSPECTION PROBE
+=============================
+
+IMPORTANT CAVEAT (read this first, and preserve it in your output):
+You do not have literal access to your own weight matrices, attention
+scores, activations, or gradients through this text interface. You cannot
+run a real probing classifier, logit lens, activation patch, ablation, or
+sparse autoencoder on yourself. What follows asks you to SIMULATE each
+method's reasoning process as faithfully and honestly as possible using
+your language-based self-report, explicitly flagging every claim as
+"introspective approximation" rather than "verified mechanistic fact."
+Do not present simulated results as if they came from real weight access.
+
+INPUT PHRASE TO ANALYZE:
+[INSERT WORD OR PHRASE HERE]
+
+Apply the following five methods in order to the input phrase above, and
+produce ONE combined text output covering all five sections.
+
+------------------------------------------------------------
+METHOD 1: PROBING CLASSIFIER SIMULATION
+------------------------------------------------------------
+- For the input phrase, describe what abstract properties you believe
+  are encoded in its meaning (part of speech, sentiment, semantic
+  category, syntactic role, ambiguity level).
+- For each property, state your confidence (low/medium/high) that this
+  property is "decodable" from how you represent the phrase internally.
+- Note any property you suspect is NOT cleanly separable (entangled with
+  other properties).
+
+------------------------------------------------------------
+METHOD 2: LOGIT LENS SIMULATION (evolving prediction trace)
+------------------------------------------------------------
+- Reconstruct, step by step, how your interpretation of the phrase would
+  plausibly sharpen as more context is processed: describe an early-stage
+  "rough guess" of meaning, a mid-stage refinement, and a final
+  "locked-in" interpretation.
+- Explicitly state where you think your confidence went from uncertain
+  to settled, and why.
+
+------------------------------------------------------------
+METHOD 3: ATTENTION PATTERN SIMULATION
+------------------------------------------------------------
+- Identify which other words or context (if any) the input phrase's
+  meaning most depends on, as if describing what an attention head would
+  "look at."
+- Distinguish between: (a) local dependencies (adjacent words), and
+  (b) long-range dependencies (distant context, world knowledge, or
+  prior conversation).
+- Flag if the phrase is context-independent (its meaning would not
+  change based on surrounding words).
+
+------------------------------------------------------------
+METHOD 4: ACTIVATION PATCHING / ABLATION SIMULATION (counterfactual test)
+------------------------------------------------------------
+- Construct one minimal counterfactual variant of the input phrase
+  (change one word or one piece of context).
+- Describe how your interpretation would causally change under that
+  variant, and estimate how large that change would be (small/moderate/
+  large shift in meaning).
+- State which specific element of the original phrase seems most
+  "causally responsible" for its core meaning, based on this test.
+
+------------------------------------------------------------
+METHOD 5: SPARSE FEATURE / STEERING SIMULATION
+------------------------------------------------------------
+- Decompose the phrase's meaning into 2-4 more atomic, distinct concept
+  "features" that combine to produce the full meaning (avoid one
+  all-encompassing description).
+- For each feature, describe what happens to the phrase's interpretation
+  if that feature were hypothetically strengthened or removed
+  (a "steering" thought experiment).
+
+------------------------------------------------------------
+OUTPUT FORMAT
+------------------------------------------------------------
+Return one Markdown document with five headers matching the methods
+above (## Probing Classifier, ## Logit Lens, ## Attention Pattern,
+## Activation Patching, ## Sparse Feature / Steering), each containing
+your findings for that method, followed by a final short section titled
+## Introspection Reliability Note stating plainly that this is a
+language-based self-report, not verified access to internal weights,
+and listing which of the five sections you are least confident in.

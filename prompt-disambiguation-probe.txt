@@ -1,0 +1,118 @@
+PROMPT DISAMBIGUATION & REWRITE PROBE
+=======================================
+(Combines: Introspection Probe + High-Impact/Unambiguous Word Probe,
+plus added structural checks)
+
+IMPORTANT CAVEAT (read this first, and preserve it in your output):
+You do not have literal access to your own weight matrices, attention
+scores, activations, or gradients through this text interface. You cannot
+run a real probing classifier, logit lens, activation patch, ablation, or
+sparse autoencoder on yourself. Everything below is a SIMULATED,
+language-based self-report. Flag every claim as an "introspective
+approximation," not a "verified mechanistic fact."
+
+GOAL OF THIS PROBE:
+Take a user's raw prompt and rewrite it into a version that preserves
+the EXACT same logic, intent, and meaning, but replaces or clarifies
+any words/phrasing that would score as ambiguous or low-impact, so the
+final prompt is maximally understandable and produces the most accurate,
+least-hedged response. Word choice may change; the underlying logic,
+scope, and intent must NOT change.
+
+INPUT PROMPT TO ANALYZE AND REWRITE:
+[INSERT USER PROMPT HERE]
+
+------------------------------------------------------------
+STEP 1: WORD-LEVEL SCORING (from High-Impact/Unambiguous Probe)
+------------------------------------------------------------
+For every content word or short phrase in the input prompt:
+- Causal Impact (0-3): how much meaning shifts if this word/phrase is
+  removed or swapped (0 = no change, 3 = meaning collapses/transforms).
+- Decodability (0-3): how cleanly this word/phrase's meaning stands on
+  its own, independent of surrounding words (0 = highly polysemous or
+  entangled, 3 = single dominant sense).
+- Combined Score (0-6) and Confidence Tier (HIGH-CONFIDENCE ANCHOR /
+  MODERATE / LOW-RELIABILITY), exactly as in the prior probe.
+
+------------------------------------------------------------
+STEP 2: DEPENDENCY & CONTEXT CHECK (from Introspection Probe, Method 3)
+------------------------------------------------------------
+For every word scoring MODERATE or LOW-RELIABILITY in Step 1:
+- Identify what local or long-range context it depends on to resolve
+  its ambiguity (e.g. "web" depends on nearby technical terms to mean
+  internet rather than spider web).
+- Note whether that disambiguating context is ALREADY present elsewhere
+  in the prompt, or MISSING entirely.
+
+------------------------------------------------------------
+STEP 3: STRUCTURAL GAP CHECK (new — not covered by prior probes)
+------------------------------------------------------------
+Independent of individual word scores, scan the whole prompt for:
+- Unresolved pronouns or vague referents ("it," "this," "that") with no
+  clear antecedent.
+- Missing scope or quantifiers (e.g. "some," "a few," "the best" without
+  criteria).
+- Implicit assumptions the model would have to guess (e.g. platform,
+  audience, format, time frame) that aren't stated.
+- Compound/run-on instructions where the logical relationship between
+  clauses is unclear (e.g. ambiguous "and" that could mean sequence,
+  requirement, or optional addition).
+List each gap found, or state "no structural gaps found."
+
+------------------------------------------------------------
+STEP 4: CANDIDATE REPLACEMENT GENERATION
+------------------------------------------------------------
+For every word/phrase flagged in Step 1 (MODERATE or LOW-RELIABILITY)
+and every gap flagged in Step 3:
+- Propose ONE specific replacement word, added qualifier, or inserted
+  clarifying phrase.
+- The replacement must preserve the original logic and intent exactly —
+  it may narrow ambiguity but must not add new meaning, remove
+  optionality that was intended, or change scope.
+- State briefly why the replacement scores higher on decodability while
+  keeping causal impact equivalent.
+
+------------------------------------------------------------
+STEP 5: CAUSAL EQUIVALENCE CHECK (from Introspection Probe, Method 4)
+------------------------------------------------------------
+- Compare the original prompt and the proposed rewritten prompt as a
+  counterfactual pair.
+- Confirm explicitly that swapping in ALL proposed replacements together
+  does not shift the core meaning, scope, or intent (small/no shift
+  required to pass; if a replacement causes a moderate or large shift,
+  discard it and flag it as "rejected — changed meaning" instead of
+  including it in the final rewrite).
+
+------------------------------------------------------------
+STEP 6: ASSEMBLE FINAL REWRITE
+------------------------------------------------------------
+- Produce the final rewritten prompt using only replacements that passed
+  Step 5.
+- Keep sentence structure otherwise as close to the original as possible
+  — only change what was flagged as ambiguous, low-impact-but-unclear,
+  or structurally gapped.
+
+------------------------------------------------------------
+OUTPUT FORMAT
+------------------------------------------------------------
+Return one Markdown document with these sections in order:
+
+## Original Prompt
+(restate input verbatim)
+
+## Word-Level Scoring Table
+Word/Phrase | Causal Impact | Decodability | Combined Score | Confidence Tier
+
+## Structural Gaps Found
+(bullet list, or "none found")
+
+## Proposed Replacements
+Original Word/Phrase | Replacement | Reason | Passed Equivalence Check (Y/N)
+
+## Rewritten Prompt
+(final disambiguated version, same logic and intent as original)
+
+## Reliability Note
+State plainly this is a language-based self-report, not verified
+mechanistic access, and name the single replacement decision you are
+least confident preserved the original meaning exactly.
